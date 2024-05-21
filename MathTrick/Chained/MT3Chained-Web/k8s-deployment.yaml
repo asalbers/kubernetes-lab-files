@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mt3chained-web
+  labels:
+    app: mt3chained
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      tier: mt3chained-web
+  template:
+    metadata:
+      annotations:
+        version: Build_Number
+      labels:
+        tier: mt3chained-web
+    spec:
+      containers:
+      - name: mt3chained-web
+             # jetacr.azurecr.io/mt3chained-web:59
+        image: somecontainerrepo/mt3chained-web:latest
+        ports:
+        - containerPort: 80
+        env:
+        - name: FAILURE_RATE
+          value: "5"
+        - name: MT3ChainedAPIEndpoint
+          value: http://mt3chained-step1-svc:5010

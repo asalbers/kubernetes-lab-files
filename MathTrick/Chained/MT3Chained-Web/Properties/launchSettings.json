@@ -1,0 +1,31 @@
+{
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iis": {
+      "applicationUrl": "http://localhost/MT3Chained-Web",
+      "sslPort": 0
+    },
+    "iisExpress": {
+      "applicationUrl": "http://localhost:65355/",
+      "sslPort": 0
+    }
+  },
+  "$schema": "http://json.schemastore.org/launchsettings.json",
+  "profiles": {
+    "MathTrick3Web": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "APPINSIGHTS_INSTRUMENTATIONKEY": "71a02f24-dffe-4cf2-a4f3-fe47f992bc42"
+      },
+      "dotnetRunMessages": "true",
+      "applicationUrl": "http://localhost:5110"
+    },
+    "BtoK": {
+      "commandName": "AzureDevSpacesLocal",
+      "launchBrowser": true
+    }
+  }
+}

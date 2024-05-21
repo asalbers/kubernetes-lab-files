@@ -1,0 +1,14 @@
+repo: aaconreg.azurecr.io
+namespace: chained
+platform: dotnet
+tags:
+  mt3chainedweb: latest 
+  mt3chainedstep1: latest 
+  mt3chainedstep2: latest 
+  mt3chainedstep2nodejs: latest  
+  mt3chainedstep3: latest 
+  mt3chainedstep4: latest 
+  mt3chainedstep5: latest
+ikey: f753b175-3272-4634-84df-e6bb518f2004
+   
+  
