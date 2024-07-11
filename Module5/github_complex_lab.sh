@@ -24,7 +24,7 @@ push_repos(){
 # Create github secrets
 
 create_gh_secrets(){
-    test
+    gh secret set --repo MT3Chained-Step$i
 }
 
 # create github workflows 
