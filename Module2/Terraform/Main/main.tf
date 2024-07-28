@@ -75,6 +75,13 @@ resource "azurerm_kubernetes_cluster" "aks" {
     network_plugin     = "azure"
     network_plugin_mode = var.network_plugin_mode
   }
+  auto_scaler_profile {
+    scale_down_unneeded         = "1m"
+    scale_down_delay_after_add  = "1m"
+    scale_down_unready          = "1m"
+    skip_nodes_with_system_pods = true
+  }
+
   depends_on = [
     azurerm_resource_group.arg
   ]
