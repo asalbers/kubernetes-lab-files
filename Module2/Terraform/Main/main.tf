@@ -14,11 +14,13 @@ provider "azurerm" {
   features {}
 }
 
+# Creates resource group 
 resource "azurerm_resource_group" "arg" {
   name     = var.AKS_RESOURCE_GROUP
   location = "East US"
 }
 
+# Creates and configures a storage account 
 resource "azurerm_storage_account" "storage" {
   name                      = var.STORAGE_ACCOUNT_NAME
   location                  = "East US"
@@ -33,7 +35,7 @@ resource "azurerm_storage_account" "storage" {
   ]
 }
 
-
+# Creates the Azure Container Registry to be used with AKS
 resource "azurerm_container_registry" "acr" {
   name                = var.ACR
   location            = "East US"
@@ -45,6 +47,7 @@ resource "azurerm_container_registry" "acr" {
   ]
 }
 
+# Creates thet base AKS Cluster with Azure CNI overlay for the networking model
 resource "azurerm_kubernetes_cluster" "aks" {
 
   name                 = var.AKS_CLUSTER
@@ -87,12 +90,14 @@ resource "azurerm_kubernetes_cluster" "aks" {
   ]
 }
 
+# Gives the AKS Cluster ACR pull role over the AKS Cluster
 resource "azurerm_role_assignment" "aks_acr" {
   scope                = azurerm_container_registry.acr.id
   role_definition_name = "AcrPull"
   principal_id         = azurerm_kubernetes_cluster.aks.kubelet_identity[0].object_id
 }
 
+# Creates the linux node pool for the AKS Cluster
 resource "azurerm_kubernetes_cluster_node_pool" "linuxnp" {
   name                  = "linuxagent1"
   kubernetes_cluster_id = azurerm_kubernetes_cluster.aks.id
@@ -106,6 +111,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "linuxnp" {
   zones                 = ["1"]
 }
 
+# Creates the Windows node pool for the AKS Cluster
 resource "azurerm_kubernetes_cluster_node_pool" "winnp" {
   name                  = "win1"
   kubernetes_cluster_id = azurerm_kubernetes_cluster.aks.id
@@ -119,7 +125,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "winnp" {
   zones                 = ["1"]
 }
 
-
+# Creates the diagnostic setting for AKS to collect logs
 resource "azurerm_monitor_diagnostic_setting" "diagnostic_logs" {
   name               = var.DIAGNOSTIC_SETTING_NAME
   target_resource_id = azurerm_kubernetes_cluster.aks.id
@@ -140,6 +146,7 @@ resource "azurerm_monitor_diagnostic_setting" "diagnostic_logs" {
   }
 }
 
+# Creates the log analytics workspace 
 resource "azurerm_log_analytics_workspace" "log_analytics" {
   name                = var.LOG_ANALYTICS_WORKSPACE_NAME
   location            = "East US"
@@ -152,6 +159,7 @@ resource "azurerm_log_analytics_workspace" "log_analytics" {
   ]
 }
 
+# provisions container insights 
 resource "azurerm_log_analytics_solution" "log_analytics" {
   solution_name         = "ContainerInsights"
   location              = azurerm_log_analytics_workspace.log_analytics.location
