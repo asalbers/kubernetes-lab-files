@@ -12,6 +12,6 @@
   "description": "A Node JS microservice to calculate a Math Trick step.",
   "dependencies": {
     "applicationinsights": "^2.1.6",
-    "express": "^4.17.1"
+    "express": "^4.19.2"
   }
 }
